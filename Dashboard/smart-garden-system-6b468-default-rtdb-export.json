@@ -1,0 +1,42 @@
+{
+  "GardenA": {
+    "Fan-1": {
+      "auto": 1,
+      "autoOffTimer": 1,
+      "status": 0,
+      "threshold": "37"
+    },
+    "Humidity": 62.1,
+    "Light": 88,
+    "Light-A": {
+      "auto": 0,
+      "autoOffTimer": 1,
+      "status": 0,
+      "threshold": "46"
+    },
+    "Light-B": {
+      "auto": 0,
+      "autoOffTimer": 6,
+      "status": 0,
+      "threshold": "45"
+    },
+    "Light-C": {
+      "auto": 0,
+      "autoOffTimer": 1,
+      "status": 0,
+      "threshold": "50"
+    },
+    "Soil": 639,
+    "Temperature": 34.2
+  },
+  "He_Thong_Tuoi": {
+    "Khu_A": 0,
+    "Khu_B": 0,
+    "Khu_C": 0,
+    "May_Bom": 0
+  },
+  "Power": {
+    "Ampe": 23,
+    "Voltage": 226
+  }
+}

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="icon" href="img/logo.png">
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Baumans|Open+Sans" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Tạo icon -->
+    <script src="https://cdn.rawgit.com/Mikhus/canvas-gauges/gh-pages/download/2.1.7/all/gauge.min.js"></script>
+    <!-- Vẽ đồng hồ -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
+
+
+</head>
+
+<body>
+    <header class="header">
+        <button class="toggle-btn" onclick="toggleNav()">☰</button>
+        <a href="Home.html"><img src="img/logo.png" alt="Logo"></a>
+        <p>SMART GARDEN SYSTEM</p>
+    </header>
+    <div class="sidebar" id="sidebar">
+        <a class="nav-link active" data-target="Home"><i class="fas fa-home"></i>Home</a>
+        <a class="nav-link" data-target="Garden-a"><i class="fa-solid fa-seedling"></i>Garden</a>
+        <a class="nav-link" data-target="Irrigation"><i class="fa-solid fa-droplet"></i>Irrigation</a>
+        <a class="nav-link" data-target="Settings"><i class="fas fa-cog"></i>Settings</a>
+        <a class="nav-link" data-target="Information"><i class="fa-solid fa-address-book"></i>Information</a>
+    </div>
+    <div class="content" id="main-content">
+        <div class="navbar" id="Home">
+            <div class="home-background">
+                <div class="background-overlay">
+                    <h2>Chào mừng đến với hệ thống giám sát vườn thông minh!</h2>
+                    <p>Theo dõi các yếu tố môi trường và quản lý các thiết bị một cách chính xác, hiệu quả.</p>
+                </div>
+            </div>
+            <div class="about-us">
+                <h1>VỀ CHÚNG TÔI</h1>
+                <p>Hệ thống giám sát vườn thông minh là một giải pháp tiên tiến giúp theo dõi và quản lý các yếu tố môi
+                    trường trong
+                    vườn một cách chính xác và hiệu quả. Sử dụng công nghệ IoT (Internet of Things), hệ thống này cho
+                    phép điều khiển từ
+                    xa các thiết bị như hệ thống tưới nước, hệ thống quạt thông gió và hệ thống chiếu sáng.</p>
+                <p>Các tính năng chính của hệ thống bao gồm:</p>
+                <p class="feature"><b>Theo dõi thời gian thực:</b> Giám sát liên tục các yếu tố môi trường như độ ẩm
+                    đất, nhiệt độ, độ ẩm không khí và ánh
+                    sáng.</p>
+                <p class="feature"><b>Quản lý tự động:</b> Tự động điều chỉnh hệ thống tưới nước và ánh sáng dựa trên dữ
+                    liệu thu thập được, giúp tối ưu hóa
+                    điều kiện phát triển cho cây trồng.</p>
+                <p class="feature"><b>Điều khiển từ xa:</b> Người dùng có thể điều khiển và giám sát hệ thống từ xa
+                    thông qua ứng dụng di động hoặc web, mang
+                    lại sự tiện lợi và linh hoạt.</p>
+                <p>Với hệ thống giám sát vườn thông minh, việc chăm sóc vườn trở nên dễ dàng và hiệu quả hơn bao giờ
+                    hết, giúp tiết kiệm
+                    thời gian và tài nguyên, đồng thời đảm bảo cây trồng luôn phát triển trong điều kiện tốt nhất.</p>
+
+            </div>
+        </div>
+
+        <div class="navbar" id="Garden-a" style="display: none;">
+            <div class="grid">
+                <div class="item ">
+                    <h1>Cảm biến</h1>
+                    <div class="clearfix al-center">
+                        <div class="boxview" style="background-image: url('img/soil.jpg');" onclick="showChart(1, 'chartSensor')">
+                            <h3 style="color: rgb(255, 166, 93);">Temperature</h3>
+                            <img id="GA-Temp-img-1" src="img/temperature-normal.png">
+                            <p id="GA-Temp-1">
+                            <p>°C</p>
+                            </p>
+                        </div>
+                        <div class="boxview" style="  background-image: url('img/soil.jpg');" onclick="showChart(2, 'chartSensor')">
+                            <h3 style="color: rgb(93, 212, 255);">Humidity</h3>
+                            <img id="GA-Humi-img-1" src="img/humidity-normal.png">
+                            <p id="GA-Humi-1">
+                            <p>%</p>
+                            </p>
+                        </div>
+                        <div class="boxview" style="background-image: url('img/soil.jpg');" onclick="showChart(3, 'chartSensor')">
+                            <h3 style="color: rgb(108, 255, 125);">Soil Moisture</h3>
+                            <img id="GA-Soil-img-1" src="img/plant_good.png">
+                            <p id="GA-Soil-1">
+                            <p> </p>
+                            </p>
+                        </div>
+                        <div class="boxview" style="  background-image: url('img/soil.jpg');" onclick="showChart(4, 'chartSensor')">
+                            <h3 style="color: rgb(246, 255, 77);">Light Sensor</h3>
+                            <img id="GA-Light-img-1" src="img/bright.png">
+                            <p id="GA-Light-1">
+                            <p> </p>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <h1>BIỂU ĐỒ</h1>
+                    <div class="al-center">
+                        <iframe id="chartSensor" src="https://thingspeak.com/channels/2699593/charts/1?bgcolor=%23fff&color=%23d62020&dynamic=true&results=20&title=Temperature-GA&type=line"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="grid item" style="grid-template-columns: 1fr;">
+                <h1>THIẾT BỊ</h1>
+                <div class="al-center">
+                    <div class="device-box">
+                        <h2>Quạt Thông Gió</h2>
+                        <img src="img/fan-off.png" alt="Hình thiết bị 1 - Tắt" id="GA-OFF-1">
+                        <img src="img/fan-on.png" alt="Hình thiết bị 1 - Bật" id="GA-ON-1" style="display: none;">
+                        <button class="toggle-btn-dv" id="GA-BTN-1">OFF</button>
+                    </div>
+                    <div class="device-box">
+                        <h2>Đèn Khu A</h2>
+                        <img src="img/bulb-off.png" alt="Hình thiết bị 1 - Tắt" id="GA-OFF-2">
+                        <img src="img/bulb-on.png" alt="Hình thiết bị 1 - Bật" id="GA-ON-2" style="display: none;">
+                        <button class="toggle-btn-dv" id="GA-BTN-2">OFF</button>
+                    </div>
+                    <div class="device-box">
+                        <h2>Đèn Khu B</h2>
+                        <img src="img/bulb-off.png" alt="Hình thiết bị 1 - Tắt" id="GA-OFF-3">
+                        <img src="img/bulb-on.png" alt="Hình thiết bị 1 - Bật" id="GA-ON-3" style="display: none;">
+                        <button class="toggle-btn-dv" id="GA-BTN-3">OFF</button>
+                    </div>
+                    <div class="device-box">
+                        <h2>Đèn Khu C</h2>
+                        <img src="img/bulb-off.png" alt="Hình thiết bị 1 - Tắt" id="GA-OFF-4">
+                        <img src="img/bulb-on.png" alt="Hình thiết bị 1 - Bật" id="GA-ON-4" style="display: none;">
+                        <button class="toggle-btn-dv" id="GA-BTN-4">OFF</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="navbar" id="Irrigation" style="display: none;">
+            <div class="grid">
+                <div class="item ">
+                    <h1>THÔNG SỐ ĐIỆN</h1>
+                    <div class="al-center">
+                        <canvas id="gauge-voltage" style="cursor: pointer;" onclick="showChart(5, 'chartPower')"></canvas>
+                        <canvas id="gauge-ampe" style="cursor: pointer;" onclick="showChart(6, 'chartPower')"></canvas>
+                    </div>
+                </div>
+                <div class="item">
+                    <h1>BIỂU ĐỒ</h1>
+                    <div class="al-center">
+                        <iframe id="chartPower" src="https://thingspeak.com/channels/2699593/charts/5?bgcolor=%23ffffff&color=00FF9C&dynamic=true&results=20&title=Voltage-Power&type=line"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="margin: 20px;">
+                <h1>HỆ THỐNG TƯỚI</h1>
+                <div class="al-center">
+                    <div class="device-box">
+                        <h2>Máy bơm</h2>
+                        <img src="img/pump-off.png" alt="Hình thiết bị 1 - Tắt" id="I-OFF-1">
+                        <img src="img/pump-on.png" alt="Hình thiết bị 1 - Bật" id="I-ON-1" style="display: none;">
+                        <button class="toggle-btn-dv" id="I-BTN-1">OFF</button>
+                    </div>
+                    <div class="device-box">
+                        <h2>Khu A</h2>
+                        <img src="img/water-pipe-off.png" alt="Hình thiết bị 1 - Tắt" id="I-OFF-2">
+                        <img src="img/water-pipe-on.png" alt="Hình thiết bị 1 - Bật" id="I-ON-2" style="display: none;">
+                        <button class="toggle-btn-dv" id="I-BTN-2">OFF</button>
+                    </div>
+                    <div class="device-box">
+                        <h2>Khu B</h2>
+                        <img src="img/water-pipe-off.png" alt="Hình thiết bị 1 - Tắt" id="I-OFF-3">
+                        <img src="img/water-pipe-on.png" alt="Hình thiết bị 1 - Bật" id="I-ON-3" style="display: none;">
+                        <button class="toggle-btn-dv" id="I-BTN-3">OFF</button>
+                    </div>
+                    <div class="device-box">
+                        <h2>Khu C</h2>
+                        <img src="img/water-pipe-off.png" alt="Hình thiết bị 1 - Tắt" id="I-OFF-4">
+                        <img src="img/water-pipe-on.png" alt="Hình thiết bị 1 - Bật" id="I-ON-4" style="display: none;">
+                        <button class="toggle-btn-dv" id="I-BTN-4">OFF</button>
+                    </div>
+                </div>
+
+               
+            </div>
+
+
+        </div>
+
+
+        <div class="navbar" id="Settings" style="display: none;">
+                <div class="item" style="margin: 20px;">
+                    <h1>Garden A</h1>
+                    <div class="al-center">
+                        <div class="autoControl">
+                            <h3>Quạt Thông Gió</h3>
+                            <div class="status">
+                                <p>Device Status</p>
+                                <p id="GA-S-1">Off</p>
+                            </div>
+                            <div class="switch">
+                                <p>Auto Mode</p>
+                                <input type="checkbox" id="GA-AS-1">
+                            </div>
+                            <div class="num-box">
+                                <p>Threshold Value</p>
+                                <input type="number" id="GA-T-1" min="0" max="100">
+                            </div>
+                            <div class="num-box">
+                                <p>Auto Off Timer (minutes)</p>
+                                <input type="number" id="GA-AO-1" min="1"  >
+                            </div>
+                        </div>
+                        <div class="autoControl">
+                            <h3>Đèn Khu A</h3>
+                            <div class="status">
+                                <p>Device Status</p>
+                                <p id="GA-S-2">Off</p>
+                            </div>
+                            <div class="switch">
+                                <p>Auto Mode</p>
+                                <input type="checkbox" id="GA-AS-2">
+                            </div>
+                            <div class="num-box">
+                                <p>Threshold Value</p>
+                                <input type="number" id="GA-T-2" min="0" max="100">
+                            </div>
+                            <div class="num-box">
+                                <p>Auto Off Timer (minutes)</p>
+                                <input type="number" id="GA-AO-2" min="1"  >
+                            </div>
+                        </div>
+                        <div class="autoControl">
+                            <h3>Đèn Khu B</h3>
+                            <div class="status">
+                                <p>Device Status</p>
+                                <p id="GA-S-3">Off</p>
+                            </div>
+                            <div class="switch">
+                                <p>Auto Mode</p>
+                                <input type="checkbox" id="GA-AS-3">
+                            </div>
+                            <div class="num-box">
+                                <p>Threshold Value</p>
+                                <input type="number" id="GA-T-3" min="0" max="100">
+                            </div>
+                            <div class="num-box">
+                                <p>Auto Off Timer (minutes)</p>
+                                <input type="number" id="GA-AO-3" min="1"  >
+                            </div>
+                        </div>
+                        <div class="autoControl">
+                            <h3>Đèn Khu C</h3>
+                            <div class="status">
+                                <p>Device Status</p>
+                                <p id="GA-S-4">Off</p>
+                            </div>
+                            <div class="switch">
+                                <p>Auto Mode</p>
+                                <input type="checkbox" id="GA-AS-4">
+                            </div>
+                            <div class="num-box">
+                                <p>Threshold Value</p>
+                                <input type="number" id="GA-T-4" min="0" max="100">
+                            </div>
+                            <div class="num-box">
+                                <p>Auto Off Timer (minutes)</p>
+                                <input type="number" id="GA-AO-4" min="1"  >
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+        </div>
+
+        <div class="navbar" id="Information" style="display: none;">
+            <h1 style="color: #4CAF50;">Thông tin thành viên</h1>
+
+            <div class="info">
+                <div class="author-card">
+                    <img src="img/MH.jpg" alt="AVT img" class="author-image">
+                    <h2>Trương Lý Minh Hoàng</h2>
+                    <p><span class="inline"><strong>MSSV:</strong></span> 22139xxx</p>
+                    <p><span class="inline"><strong>Ngày sinh:</strong></span> xx/08/2004</p>
+                    <p><span class="inline"><strong>Ngành học:</strong></span> Hệ thống nhúng & IoT</p>
+                    <div class="contact-info">
+                        <p><span class="inline"><strong>Email:</strong></span> <a href="mailto:truonglyminhhoang2004@gmail.com"
+                                style="color: blue; ">truonglyminhhoang2004@gmail.com</a></p>
+                        <p><span class="inline"><strong>Điện thoại:</strong></span> 0832 525 xxx</p>
+                    </div>
+                </div>
+
+                <div class="author-card">
+                    <img src="img/PNH.png" alt="AVT img" class="author-image">
+                    <h2>Phan Nhị Hào</h2>
+                    <p><span class="inline"><strong>MSSV:</strong></span> 22139xxx</p>
+                    <p><span class="inline"><strong>Ngày sinh:</strong></span> xx/03/2004</p>
+                    <p><span class="inline"><strong>Ngành học:</strong></span> Hệ thống nhúng & IoT</p>
+                    <div class="contact-info">
+                        <p><span class="inline"><strong>Email:</strong></span> <a href="mailto:nhihao2903@gmail.com"
+                                style="color: blue; ">nhihao2903@gmail.com</a></p>
+                        <p><span class="inline"><strong>Điện thoại:</strong></span> 0352 733 xxx</p>
+                    </div>
+                </div>
+
+                <div class="author-card">
+                    <img src="img/NH.jpg" alt="AVT img" class="author-image">
+                    <h2>Mai Ngọc Hoàng</h2>
+                    <p><span class="inline"><strong>MSSV:</strong></span> 22139xxx</p>
+                    <p><span class="inline"><strong>Ngày sinh:</strong></span> xx/01/2004</p>
+                    <p><span class="inline"><strong>Ngành học:</strong></span> Hệ thống nhúng & IoT</p>
+                    <div class="contact-info">
+                        <p><span class="inline"><strong>Email:</strong></span> <a href="mailto:ngochoang2012004@gmail.com"
+                                style="color: blue; ">ngochoang2012004@gmail.com</a></p>
+                        <p><span class="inline"><strong>Điện thoại:</strong></span> 0395 157 xxx</p>
+                    </div>
+                </div>
+
+                
+            </div>
+
+            <div class="info-box">
+                <h2 style="color: #4CAF50; text-align: left;">Thông tin giảng viên</h2>
+                <p><span class="inline"><strong>Giảng viên:</strong></span> Trương Quang Phúc</p>
+                <p><span class="inline"><strong>Môn học:</strong></span> TT Kiến trúc và giao thức IoT</p>
+                <p><span class="inline"><strong>Email:</strong></span> <a href="mailto:#"
+                        style="color: blue; ">phuctq@hcumute.edu.vn</a></p>
+                <p><span class="inline"><strong>Điện thoại:</strong></span> 0917 731 xxx</p>
+            </div>
+        </div>
+
+    
+        <!--Begin - Copyright-->
+        <div id="copyright">
+            <p>© Copyright <a href="https://www.youtube.com/c/PhanNh%E1%BB%8BH%C3%A0o">HAO04</a> 2024-2025.
+                Designers by <a href="https://www.facebook.com/100012876013996">Phan Nhị Hào</a>.</p>
+        </div>
+        <!--End - Copyright-->
+
+    </div>
+
+    <script src="JS/script.js"></script>
+</body>
+
+</html>
